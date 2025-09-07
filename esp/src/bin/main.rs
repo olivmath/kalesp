@@ -82,7 +82,7 @@ fn main() -> ! {
                                     send_info_message(&mut uart, &mining_state).ok();
                                 }
                                 Command::Reset => {
-                                    send_reset_message(&mut uart).ok();
+                                    send_reset_message(&mut uart, &mut mining_state).ok();
                                 }
                                 Command::Zeros(zeros) => {
                                     mining_state.set_zeros(zeros);

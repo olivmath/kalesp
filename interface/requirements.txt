@@ -1,6 +1,9 @@
 # Dependências para comunicação serial com ESP32 em Python
 pyserial>=3.5
 
+# Interface gráfica com Flet
+flet>=0.24.0
+
 # Opcional: para interface mais avançada
 # rich>=13.0.0  # Para output colorido e formatado
 # click>=8.0.0  # Para CLI mais robusta

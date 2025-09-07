@@ -37,6 +37,11 @@ impl MiningState {
         Self::default()
     }
     
+    /// Reseta o estado de mineração para os valores padrão
+    pub fn reset(&mut self) {
+        *self = Self::default();
+    }
+    
     /// Define o número de zeros necessários
     pub fn set_zeros(&mut self, zeros: u8) {
         self.zeros = zeros;
