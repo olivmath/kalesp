@@ -16,6 +16,8 @@ esp-hal                = { version = "=1.0.0-rc.0", features = ["esp32"] }
 critical-section = "1.2.0"
 rtt-target       = "0.6.1"
 heapless         = "0.8.0"
+sha2             = { version = "0.10", default-features = false }
+embedded-hal     = "1.0"
 
 
 [profile.dev]
