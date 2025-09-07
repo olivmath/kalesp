@@ -332,9 +332,9 @@ class ESP32GUI:
         page.title = "ESP32 Serial Mining Interface"
         page.theme_mode = ft.ThemeMode.DARK
         page.bgcolor = ft.Colors.BLACK
-        page.window_width = 1200
-        page.window_height = 800
-        page.padding = 10
+        page.window_width = 1400
+        page.window_height = 900
+        page.padding = 15
 
         # Header
         header = ft.Container(
@@ -422,8 +422,8 @@ class ESP32GUI:
             bgcolor=ft.Colors.GREY_900,
             padding=ft.padding.all(10),
             border=ft.border.all(1, ft.Colors.GREY_700),
-            border_radius=0,
-            width=400,
+            border_radius=5,
+            width=450,
         )
 
         # Device Info
@@ -446,9 +446,9 @@ class ESP32GUI:
             bgcolor=ft.Colors.GREY_900,
             padding=ft.padding.all(10),
             border=ft.border.all(1, ft.Colors.GREY_700),
-            border_radius=0,
-            width=300,
-            height=200,
+            border_radius=5,
+            width=450,
+            height=250,
         )
 
         # Mining Controls
@@ -564,14 +564,16 @@ class ESP32GUI:
             bgcolor=ft.Colors.GREY_900,
             padding=ft.padding.all(10),
             border=ft.border.all(1, ft.Colors.GREY_700),
-            border_radius=0,
-            width=250,
-            height=200,
+            border_radius=5,
+            width=450,
+            height=180,
         )
 
         # Coluna da esquerda: Conexão + Device Info + Mining Controls
         left_column = ft.Column(
-            [connection_card, mining_controls, device_info_card], spacing=10
+            [connection_card, device_info_card, mining_controls], 
+            spacing=15,
+            width=470
         )
 
         # Coluna da direita: Terminal Log
@@ -582,7 +584,7 @@ class ESP32GUI:
             bgcolor=ft.Colors.BLACK,
             padding=ft.padding.all(10),
             border=ft.border.all(1, ft.Colors.GREY_700),
-            border_radius=0,
+            border_radius=5,
             expand=True,
         )
 
@@ -624,9 +626,15 @@ class ESP32GUI:
         )
 
         # Layout principal com 2 colunas
-        main_content = ft.Row([left_column, right_column], spacing=10, expand=True)
+        main_content = ft.Row(
+            [left_column, right_column], 
+            spacing=20, 
+            expand=True,
+            alignment=ft.MainAxisAlignment.START,
+            vertical_alignment=ft.CrossAxisAlignment.START
+        )
 
-        page.add(ft.Column([header, main_content], spacing=10, expand=True))
+        page.add(ft.Column([header, main_content], spacing=15, expand=True))
 
         # Inicializar log e device info
         self.log_message(
