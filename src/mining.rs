@@ -17,6 +17,7 @@ pub struct MiningState {
     pub zeros: u8,
     pub entropy: u8,
     pub is_configured: bool,
+    pub last_nonce: Option<u32>,
 }
 
 impl Default for MiningState {
@@ -25,6 +26,7 @@ impl Default for MiningState {
             zeros: 0,
             entropy: 0,
             is_configured: false,
+            last_nonce: None,
         }
     }
 }
@@ -52,9 +54,14 @@ impl MiningState {
         self.is_configured = self.zeros > 0 && self.entropy > 0;
     }
     
-    /// Retorna se está pronto para minerar
+    /// Verifica se está pronto para minerar
     pub fn is_ready_to_mine(&self) -> bool {
         self.is_configured
+    }
+    
+    /// Define o último nonce encontrado
+    pub fn set_last_nonce(&mut self, nonce: u32) {
+        self.last_nonce = Some(nonce);
     }
 }
 

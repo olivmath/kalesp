@@ -15,8 +15,8 @@ use rtt_target::rprintln;
 use heapless::String;
 use core::fmt::Write;
 use kalesp::msg::{
-    Command, send_help_message, send_status_message, send_info_message, 
-    send_ping_message, send_reset_message, send_unknown_command_message,
+    Command, send_help_message, send_info_message, 
+    send_reset_message, send_unknown_command_message,
     send_zeros_message, send_entropy_message, send_mine_start_message,
     send_mine_result_message, send_mine_error_message
 };
@@ -48,8 +48,7 @@ fn main() -> ! {
     write!(uart, "ESP32 Serial Comunicação iniciada!\r\n").ok();
     write!(uart, "Digite 'help' para ver comandos disponíveis\r\n").ok();
     
-    let mut counter = 0u32;
-    let mut last_send = Instant::now();
+
     let mut last_led_toggle = Instant::now();
     let mut buffer: String<128> = String::new();
     
@@ -79,17 +78,10 @@ fn main() -> ! {
                                 Command::Help => {
                                     send_help_message(&mut uart).ok();
                                 }
-                                Command::Status => {
-                                    send_status_message(&mut uart, counter).ok();
-                                }
                                 Command::Info => {
-                                    send_info_message(&mut uart).ok();
-                                }
-                                Command::Ping => {
-                                    send_ping_message(&mut uart).ok();
+                                    send_info_message(&mut uart, &mining_state).ok();
                                 }
                                 Command::Reset => {
-                                    counter = 0;
                                     send_reset_message(&mut uart).ok();
                                 }
                                 Command::Zeros(zeros) => {
@@ -113,6 +105,7 @@ fn main() -> ! {
                                         
                                         match local_miner.mine(&mut uart, &mut led) {
                                             Ok(nonce) => {
+                                                mining_state.set_last_nonce(nonce);
                                                 send_mine_result_message(&mut uart, nonce).ok();
                                                 rprintln!("Mineração concluída! Nonce: {}", nonce);
                                             }
@@ -144,13 +137,7 @@ fn main() -> ! {
             }
         }
 
-        // Enviar status a cada 15 segundos (menos frequente)
-        if last_send.elapsed() >= Duration::from_millis(15000) {
-            send_status_message(&mut uart, counter).ok();
-            rprintln!("Status enviado: {}", counter);
-            counter += 1;
-            last_send = Instant::now();
-        }
+
 
         // Pequeno delay para não sobrecarregar o sistema
         let delay_start = Instant::now();

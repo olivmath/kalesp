@@ -4,9 +4,7 @@
 //! pelo sistema de comunicação serial do ESP32.
 
 pub mod help;
-pub mod status;
 pub mod info;
-pub mod ping;
 pub mod reset;
 pub mod unknown;
 pub mod zeros;
@@ -15,9 +13,7 @@ pub mod mine;
 
 // Re-exportar as funções principais
 pub use help::send_help_message;
-pub use status::send_status_message;
 pub use info::send_info_message;
-pub use ping::send_ping_message;
 pub use reset::send_reset_message;
 pub use unknown::send_unknown_command_message;
 pub use zeros::{send_zeros_message, send_zeros_error_message};
@@ -28,9 +24,7 @@ pub use mine::{send_mine_start_message, send_mine_result_message, send_mine_erro
 #[derive(Debug, PartialEq)]
 pub enum Command {
     Help,
-    Status,
     Info,
-    Ping,
     Reset,
     Zeros(u8),
     Entropy(u8),
@@ -52,12 +46,8 @@ impl Command {
         
         if command.eq_ignore_ascii_case("help") {
             Command::Help
-        } else if command.eq_ignore_ascii_case("status") {
-            Command::Status
         } else if command.eq_ignore_ascii_case("info") {
             Command::Info
-        } else if command.eq_ignore_ascii_case("ping") {
-            Command::Ping
         } else if command.eq_ignore_ascii_case("reset") {
             Command::Reset
         } else if command.eq_ignore_ascii_case("zeros") {
