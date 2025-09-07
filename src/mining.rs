@@ -88,25 +88,13 @@ pub struct ZeroChecker;
 impl ZeroChecker {
     /// Verifica se o hash tem o número necessário de zeros no início
     pub fn check_zeros(hash: &[u8; 32], required_zeros: u8) -> bool {
-        let bytes_to_check = (required_zeros / 8) as usize;
-        let remaining_bits = required_zeros % 8;
-        
-        // Verifica bytes completos
-        for i in 0..bytes_to_check {
-            if hash[i] != 0 {
-                return false;
-            }
+        // Verifica bytes completos (como no exemplo funcional)
+        let zeros_to_check = required_zeros as usize;
+        if zeros_to_check > hash.len() {
+            return false;
         }
         
-        // Verifica bits restantes no próximo byte
-        if remaining_bits > 0 && bytes_to_check < hash.len() {
-            let mask = 0xFF << (8 - remaining_bits);
-            if (hash[bytes_to_check] & mask) != 0 {
-                return false;
-            }
-        }
-        
-        true
+        hash[..zeros_to_check].iter().all(|&byte| byte == 0u8)
     }
 }
 
