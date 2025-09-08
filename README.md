@@ -22,40 +22,40 @@
 
 ```mermaid
 graph TD
-    A[ESP32 Firmware - Executa hashes Keccak-256] -- Comunicação Serial UART --> B[Interface Python - GUI e Orquestração]
-    B -- Comandos e Configurações --> A
-    A -- Resultados de Hash e Status --> B
-    B -- Integração e Submissão --> C[Rede Stellar - Blockchain KALE]
-    A --- D[Processo de Mineração - Nonces e Dificuldade]
+    A[ESP32 Firmware - Executes Keccak-256 hashes] -- Serial UART Communication --> B[Python Interface - GUI and Orchestration]
+    B -- Commands and Configurations --> A
+    A -- Hash Results and Status --> B
+    B -- Integration and Submission --> C[Stellar Network - KALE Blockchain]
+    A --- D[Mining Process - Nonces and Difficulty]
 ```
 
 ## 🔄 Mining Workflow (Plant → Work → Harvest)
 
 ```mermaid
 graph TD
-    A[Início] --> B[Plant: Stake e Início do Ciclo]
-    B --> C[Work: Proof-of-Work no ESP32]
-    C -->|Nonce Válido Encontrado| D[Harvest: Submissão e Reivindicação de Recompensas]
-    C -->|Continuar Busca| C
-    D --> E[Fim / Reinício do Ciclo]
+    A[Start] --> B[Plant: Stake and Cycle Initialization]
+    B --> C[Work: Proof-of-Work on ESP32]
+    C -->|Valid Nonce Found| D[Harvest: Submission and Reward Claiming]
+    C -->|Continue Search| C
+    D --> E[End / Cycle Restart]
 ```
 
 ## 📅 Development Roadmap
 
 ```mermaid
 gantt
-    title Roadmap de Integração KALESP
+    title KALESP Integration Roadmap
     dateFormat  YYYY-MM-DD
-    section Fase 1
-    Análise e Mapeamento :done, p1, 2023-10-01, 30d
-    section Fase 2
-    Implementação Keccak-256 no ESP32 :done, p2, after p1, 45d
-    section Fase 3
-    Integração Stellar SDK : p3, after p2, 60d
-    section Fase 4
-    Testes em Testnet : p4, after p3, 30d
-    section Fase 5
-    Deployment em Mainnet : p5, after p4, 30d
+    section Phase 1
+    Analysis and Mapping :done, p1, 2023-10-01, 30d
+    section Phase 2
+    Keccak-256 Implementation on ESP32 :done, p2, after p1, 45d
+    section Phase 3
+    Stellar SDK Integration : p3, after p2, 60d
+    section Phase 4
+    Testnet Testing : p4, after p3, 30d
+    section Phase 5
+    Mainnet Deployment : p5, after p4, 30d
 ```
 
 
@@ -250,27 +250,27 @@ The graphical interface provides:
 
 ## 🚀 Roadmap - KALE Integration
 
-### Roadmap para Mineração Real de KALE
+### Roadmap for Real KALE Mining
 
-- [x] Implementação de comunicação serial bidirecional ESP32 ↔ Python
-- [x] Interface gráfica intuitiva com Flet
-- [x] Algoritmos de hash Keccak-256 no ESP32
-- [x] Configuração de dificuldade com zeros prefixados
-- [x] Monitoramento em tempo real de hashrate e status
-- [x] Detecção automática de portas seriais
-- [x] Comandos básicos (help, info, reset, mine, zeros, entropy, hash)
-- [x] Fase 1: Análise e Mapeamento
-- [x] Fase 2: Implementação de Keccak-256 no ESP32
-- [ ] Fase 3: Integração com Stellar SDK via host Python
-- [ ] Orquestração automática de transações Stellar (plant → work → harvest)
-- [ ] Monitoramento de blocos em tempo real
-- [ ] Submissão automática de proof-of-work
-- [ ] Gerenciamento de rewards e stakes
-- [ ] Recursos de segurança (chaves privadas no host, comunicação segura, retries)
-- [ ] Arquitetura distribuída completa
-- [ ] Fase 4: Testes em Testnet
-- [ ] Fase 5: Deployment em Mainnet
-- [ ] Otimização de performance (hashrate ~100 KH/s, latência <1s, uptime 24/7)
+- [x] Bidirectional serial communication implementation ESP32 ↔ Python
+- [x] Intuitive graphical interface with Flet
+- [x] Keccak-256 hash algorithms on ESP32
+- [x] Difficulty configuration with prefixed zeros
+- [x] Real-time hashrate and status monitoring
+- [x] Automatic serial port detection
+- [x] Basic commands (help, info, reset, mine, zeros, entropy, hash)
+- [x] Phase 1: Analysis and Mapping
+- [x] Phase 2: Keccak-256 Implementation on ESP32
+- [ ] Phase 3: Stellar SDK Integration via Python host
+- [ ] Automatic orchestration of Stellar transactions (plant → work → harvest)
+- [ ] Real-time block monitoring
+- [ ] Automatic proof-of-work submission
+- [ ] Rewards and stakes management
+- [ ] Security features (private keys on host, secure communication, retries)
+- [ ] Complete distributed architecture
+- [ ] Phase 4: Testnet Testing
+- [ ] Phase 5: Mainnet Deployment
+- [ ] Performance optimization (hashrate ~100 KH/s, latency <1s, uptime 24/7)
 
 ### 🎯 **Future Objective**
 
@@ -308,8 +308,8 @@ Integrate KALESP with the **KALE blockchain** ecosystem for real mining on the S
 
 ### 📅 **Development Phases**
 
-1. **Phase 1** - Analysis and Mapping _(In Progress)_
-2. **Phase 2** - Keccak-256 Implementation on ESP32
+1. **Phase 1** - Analysis and Mapping _(Completed)_
+2. **Phase 2** - Keccak-256 Implementation on ESP32 _(Completed)_
 3. **Phase 3** - Stellar SDK Integration
 4. **Phase 4** - Testnet Testing
 5. **Phase 5** - Mainnet Deployment
@@ -355,4 +355,4 @@ This project is licensed under the MIT License. See the `LICENSE` file for more 
 
 ---
 
-> 💡 **Note**: Os diagramas acima mostram a arquitetura atual e o roadmap planejado para integração completa com o ecossistema KALE blockchain.
+> 💡 **Note**: The diagrams above show the current architecture and planned roadmap for complete integration with the KALE blockchain ecosystem.
