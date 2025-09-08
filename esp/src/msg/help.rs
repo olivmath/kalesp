@@ -17,6 +17,10 @@ where
     write!(uart, "zeros N  - Define número de zeros (ex: zeros 8)\r\n")?;
     write!(uart, "entropy N- Define entropy (ex: entropy 5)\r\n")?;
     write!(uart, "mine     - Inicia mineração\r\n")?;
+    write!(uart, "\r\n=== Comandos de Hash ===\r\n")?;
+    write!(uart, "hash     - Mostra algoritmo atual\r\n")?;
+    write!(uart, "hash sha256   - Usa SHA-256\r\n")?;
+    write!(uart, "hash keccak256- Usa Keccak-256\r\n")?;
     write!(uart, "============================\r\n\r\n")?;
     Ok(())
 }

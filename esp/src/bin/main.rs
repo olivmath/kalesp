@@ -18,7 +18,8 @@ use kalesp::msg::{
     Command, send_help_message, send_info_message, 
     send_reset_message, send_unknown_command_message,
     send_zeros_message, send_entropy_message, send_mine_start_message,
-    send_mine_result_message, send_mine_error_message
+    send_mine_result_message, send_mine_error_message, send_hash_message,
+    send_current_hash_message
 };
 use kalesp::mining::{MiningState, MinerFactory};
 
@@ -54,7 +55,7 @@ fn main() -> ! {
     
     // Estado de mineração
     let mut mining_state = MiningState::new();
-    let _miner = MinerFactory::create_sha256_miner();
+    let mut current_miner = MinerFactory::create_miner_for_algorithm(mining_state.get_hash_algorithm());
 
     loop {
         // Piscar LED a cada 500ms para indicar que está funcionando
@@ -97,13 +98,12 @@ fn main() -> ! {
                                 Command::Mine => {
                                     if mining_state.is_ready_to_mine() {
                                         send_mine_start_message(&mut uart, mining_state.zeros, mining_state.entropy).ok();
-                                        rprintln!("Iniciando mineração...");
+                                        rprintln!("Iniciando mineração com {}...", mining_state.get_hash_algorithm().as_str());
                                         
-                                        // Criar uma cópia mutável do minerador para esta operação
-                                        let mut local_miner = MinerFactory::create_sha256_miner();
-                                        local_miner.update_state(mining_state);
+                                        // Atualizar o estado do minerador atual
+                                        current_miner.update_state(mining_state);
                                         
-                                        match local_miner.mine(&mut uart, &mut led) {
+                                        match current_miner.mine(&mut uart, &mut led) {
                                             Ok(nonce) => {
                                                 mining_state.set_last_nonce(nonce);
                                                 send_mine_result_message(&mut uart, nonce).ok();
@@ -118,6 +118,16 @@ fn main() -> ! {
                                         send_mine_error_message(&mut uart, "Configure zeros e entropy primeiro").ok();
                                         rprintln!("Mineração não configurada");
                                     }
+                                }
+                                Command::Hash(algorithm) => {
+                                    mining_state.set_hash_algorithm(algorithm);
+                                    current_miner = MinerFactory::create_miner_for_algorithm(algorithm);
+                                    send_hash_message(&mut uart, algorithm).ok();
+                                    rprintln!("Algoritmo alterado para: {}", algorithm.as_str());
+                                }
+                                Command::HashInfo => {
+                                    send_current_hash_message(&mut uart, mining_state.get_hash_algorithm()).ok();
+                                    rprintln!("Algoritmo atual: {}", mining_state.get_hash_algorithm().as_str());
                                 }
                                 Command::Unknown(_) => {
                                     send_unknown_command_message(&mut uart, cmd_str).ok();

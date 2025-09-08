@@ -17,6 +17,7 @@ where
     writeln!(uart, "UART: 115200 baud")?;
     writeln!(uart, "Pinos: TX=GPIO1, RX=GPIO3")?;
     writeln!(uart, "=== Estado de Mineração ===")?;
+    writeln!(uart, "Algoritmo: {}", mining_state.get_hash_algorithm().as_str())?;
     writeln!(uart, "Zeros: {}", mining_state.zeros)?;
     writeln!(uart, "Entropy: {}", mining_state.entropy)?;
     match mining_state.last_nonce {
