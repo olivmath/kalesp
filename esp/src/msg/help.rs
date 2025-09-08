@@ -4,7 +4,7 @@ use esp_hal::uart::Uart;
 use esp_hal::DriverMode;
 use core::fmt::Write;
 
-/// Envia a mensagem de ajuda com todos os comandos disponíveis
+/// Sends help message with all available commands
 pub fn send_help_message<D>(uart: &mut Uart<D>) -> Result<(), core::fmt::Error> 
 where
     D: DriverMode,

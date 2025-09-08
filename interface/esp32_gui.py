@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-Interface gráfica para comunicação com ESP32 usando Flet
-Estilo Terminal/Assembler
+Graphical interface for ESP32 communication using Flet
+Terminal/Assembler style
 """
 
 import flet as ft
@@ -18,11 +18,11 @@ class ESP32GUI:
         self.monitoring_thread = None
         self.is_mining = False
 
-        # Configurações de mineração
+        # Mining configurations
         self.zeros_value = 0
         self.entropy_value = 0
 
-        # Estado do dispositivo
+        # Device state
         self.device_info = {
             "device": "ESP32",
             "firmware": "Serial Echo v1.0",
@@ -33,7 +33,7 @@ class ESP32GUI:
             "last_nonce": -1,
         }
 
-        # Controles da interface
+        # Interface controls
         self.status_text = None
         self.port_dropdown = None
         self.connect_button = None
@@ -44,7 +44,7 @@ class ESP32GUI:
         self.mining_status = None
 
     def get_available_ports(self):
-        """Busca portas seriais disponíveis"""
+        """Search for available serial ports"""
         ports = []
         # macOS/Linux
         ports.extend(glob.glob("/dev/cu.*"))
@@ -52,16 +52,16 @@ class ESP32GUI:
         ports.extend(glob.glob("/dev/ttyACM*"))
 
         if not ports:
-            ports = ["/dev/cu.usbserial-0001"]  # Porta padrão
+            ports = ["/dev/cu.usbserial-0001"]  # Default port
 
         return ports
 
     def log_message(self, message, msg_type="info"):
-        """Adiciona mensagem ao log"""
+        """Add message to log"""
         if self.log_column:
             timestamp = time.strftime("%H:%M:%S")
 
-            # Definir cores baseado no tipo
+            # Define colors based on type
             color = ft.Colors.WHITE
             prefix = ""
 
@@ -106,18 +106,18 @@ class ESP32GUI:
 
             self.log_column.controls.append(log_entry)
 
-            # Manter apenas as últimas 100 mensagens
+            # Keep only the last 100 messages
             if len(self.log_column.controls) > 100:
                 self.log_column.controls.pop(0)
 
             self.log_column.update()
 
-            # Auto-scroll para o final
+            # Auto-scroll to end
             if hasattr(self.log_column.parent, "scroll_to"):
                 self.log_column.parent.scroll_to(offset=-1, duration=100)
 
     def update_device_info(self):
-        """Atualiza display de informações do dispositivo"""
+        """Updates device information display"""
         if self.device_info_column:
             self.device_info_column.controls.clear()
 
@@ -150,7 +150,7 @@ class ESP32GUI:
             self.device_info_column.update()
 
     def connect_esp32(self, e):
-        """Conecta ou desconecta do ESP32"""
+        """Connect or disconnect from ESP32"""
         if not self.connected:
             port = self.port_dropdown.value
             if not port:
@@ -167,12 +167,12 @@ class ESP32GUI:
                 self.status_text.value = "Conectado"
                 self.status_text.color = ft.Colors.GREEN_400
 
-                # Iniciar monitoramento personalizado
+                # Start custom monitoring
                 self.start_custom_monitoring()
 
-                self.log_message(f"Conectado ao ESP32 em {port}", "success")
+                self.log_message(f"Connected to ESP32 on {port}", "success")
                 self.log_message(
-                    "Comunicacao iniciada! Comandos: help, info, reset", "info"
+                    "Communication started! Commands: help, info, reset", "info"
                 )
             else:
                 self.log_message(f"Erro ao conectar em {port}", "error")
@@ -185,14 +185,14 @@ class ESP32GUI:
             self.connect_button.bgcolor = ft.Colors.GREEN_900
             self.status_text.value = "Desconectado"
             self.status_text.color = ft.Colors.RED_400
-            self.log_message("Desconectado do ESP32", "warning")
+            self.log_message("Disconnected from ESP32", "warning")
             self.update_mining_status()
 
         self.connect_button.update()
         self.status_text.update()
 
     def start_custom_monitoring(self):
-        """Inicia monitoramento personalizado das mensagens"""
+        """Start custom message monitoring"""
 
         def monitor():
             while (
@@ -210,17 +210,17 @@ class ESP32GUI:
                             self.process_esp32_message(message)
                     time.sleep(0.1)
                 except Exception as e:
-                    self.log_message(f"Erro no monitoramento: {e}", "error")
+                    self.log_message(f"Monitoring error: {e}", "error")
                     break
 
         self.monitoring_thread = threading.Thread(target=monitor, daemon=True)
         self.monitoring_thread.start()
 
     def process_esp32_message(self, message):
-        """Processa mensagens do ESP32 e atualiza estado"""
+        """Process ESP32 messages and update state"""
         self.log_message(message, "received")
 
-        # Atualizar estado baseado nas mensagens
+        # Update state based on messages
         if message.startswith("ZEROS:"):
             try:
                 zeros = int(message.split()[1])
@@ -248,7 +248,7 @@ class ESP32GUI:
         elif "MINE_RESULT:" in message or "FOUND:" in message:
             self.is_mining = False
             self.update_mining_status()
-            # Extrair nonce se possível
+            # Extract nonce if possible
             if "encontrado:" in message:
                 try:
                     nonce = int(message.split("encontrado:")[-1].strip())
@@ -266,7 +266,7 @@ class ESP32GUI:
             self.update_device_info()
 
     def update_mining_status(self):
-        """Atualiza status de mineração"""
+        """Updates mining status"""
         if self.mining_status:
             if self.is_mining:
                 self.mining_status.value = "MINING..."
@@ -277,7 +277,7 @@ class ESP32GUI:
             self.mining_status.update()
 
     def send_command(self, command):
-        """Envia comando para o ESP32"""
+        """Send command to ESP32"""
         if not self.connected or not self.esp32:
             self.log_message("ERRO: ESP32 nao conectado", "error")
             return
@@ -300,7 +300,7 @@ class ESP32GUI:
         if self.is_mining:
             self.is_mining = False
             self.update_mining_status()
-            self.log_message("MINE_STOP: Mineracao interrompida pelo usuario", "sent")
+            self.log_message("MINE_STOP: Mining interrupted by user", "sent")
         else:
             self.send_command("mine")
 
@@ -319,7 +319,7 @@ class ESP32GUI:
             self.log_message("ERRO: Valor de entropy invalido", "error")
 
     def clear_log(self, e):
-        """Limpa o log de mensagens"""
+        """Clear message log"""
         if self.log_column:
             self.log_column.controls.clear()
             self.log_column.update()
@@ -328,7 +328,7 @@ class ESP32GUI:
             )
 
     def build_ui(self, page: ft.Page):
-        """Constrói a interface do usuário"""
+        """Builds the user interface"""
         page.title = "ESP32 Serial Mining Interface"
         page.theme_mode = ft.ThemeMode.DARK
         page.bgcolor = ft.Colors.BLACK
@@ -372,7 +372,7 @@ class ESP32GUI:
             border=ft.border.only(bottom=ft.border.BorderSide(1, ft.Colors.GREY_700)),
         )
 
-        # Área de conexão
+        # Connection area
         available_ports = self.get_available_ports()
         self.port_dropdown = ft.Dropdown(
             label="PORTA",
@@ -569,7 +569,7 @@ class ESP32GUI:
             height=180,
         )
 
-        # Coluna da esquerda: Conexão + Device Info + Mining Controls
+        # Left column: Connection + Device Info + Mining Controls
         left_column = ft.Column(
             [connection_card, device_info_card, mining_controls], 
             spacing=15,

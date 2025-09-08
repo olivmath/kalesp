@@ -1,11 +1,11 @@
-//! Mensagem para comandos não reconhecidos
+//! Message for unrecognized commands
 
 use esp_hal::uart::Uart;
 use esp_hal::DriverMode;
 use heapless::String;
 use core::fmt::Write;
 
-/// Envia mensagem para comando não reconhecido
+/// Sends message for unrecognized command
 pub fn send_unknown_command_message<D>(uart: &mut Uart<D>, cmd: &str) -> Result<(), core::fmt::Error>
 where
     D: DriverMode,

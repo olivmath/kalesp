@@ -1,11 +1,11 @@
-//! Módulo de mineração para o sistema Kale ESP
+//! Mining module for the Kale ESP system
 //!
-//! Este módulo implementa a funcionalidade de mineração seguindo os princípios KISS e SOLID:
-//! - Single Responsibility: Cada struct/função tem uma responsabilidade específica
-//! - Open/Closed: Extensível para novos algoritmos de hash
-//! - Liskov Substitution: Interfaces bem definidas
-//! - Interface Segregation: Interfaces pequenas e específicas
-//! - Dependency Inversion: Depende de abstrações, não implementações
+//! This module implements mining functionality following KISS and SOLID principles:
+//! - Single Responsibility: Each struct/function has a specific responsibility
+//! - Open/Closed: Extensible for new hash algorithms
+//! - Liskov Substitution: Subtypes can replace base types
+//! - Interface Segregation: Small and specific interfaces
+//! - Dependency Inversion: Depends on abstractions, not implementations
 
 use sha2::{Digest, Sha256};
 use sha3::{Keccak256};
@@ -13,7 +13,7 @@ use crate::msg::HashAlgorithm;
 
 use core::fmt::Write;
 
-/// Estado da mineração - armazena configurações atuais
+/// Mining state - stores current configurations
 #[derive(Debug, Clone, Copy)]
 pub struct MiningState {
     pub zeros: u8,
@@ -36,17 +36,17 @@ impl Default for MiningState {
 }
 
 impl MiningState {
-    /// Cria um novo estado de mineração
+    /// Creates a new mining state
     pub fn new() -> Self {
         Self::default()
     }
     
-    /// Reseta o estado de mineração para os valores padrão
+    /// Resets mining state to default values
     pub fn reset(&mut self) {
         *self = Self::default();
     }
     
-    /// Define o número de zeros necessários
+    /// Sets the number of required zeros
     pub fn set_zeros(&mut self, zeros: u8) {
         self.zeros = zeros;
         self.update_configuration_status();
@@ -58,17 +58,17 @@ impl MiningState {
         self.update_configuration_status();
     }
     
-    /// Verifica se a mineração está configurada (zeros e entropy definidos)
+    /// Checks if mining is configured (zeros and entropy defined)
     fn update_configuration_status(&mut self) {
         self.is_configured = self.zeros > 0 && self.entropy > 0;
     }
     
-    /// Verifica se está pronto para minerar
+    /// Checks if ready to mine
     pub fn is_ready_to_mine(&self) -> bool {
         self.is_configured
     }
     
-    /// Define o último nonce encontrado
+    /// Sets the last found nonce
     pub fn set_last_nonce(&mut self, nonce: u32) {
         self.last_nonce = Some(nonce);
     }
@@ -78,18 +78,18 @@ impl MiningState {
         self.hash_algorithm = algorithm;
     }
     
-    /// Obtém o algoritmo de hash atual
+    /// Gets the current hash algorithm
     pub fn get_hash_algorithm(&self) -> HashAlgorithm {
         self.hash_algorithm
     }
 }
 
-/// Trait para operações de hash - permite extensibilidade
+/// Trait for hash operations - allows extensibility
 pub trait Hasher {
     fn hash(&self, data: u8, nonce: u32) -> [u8; 32];
 }
 
-/// Implementação SHA256 do hasher
+/// SHA256 hasher implementation
 pub struct Sha256Hasher;
 
 impl Hasher for Sha256Hasher {
@@ -101,7 +101,7 @@ impl Hasher for Sha256Hasher {
     }
 }
 
-/// Implementação Keccak-256 do hasher
+/// Keccak-256 hasher implementation
 pub struct Keccak256Hasher;
 
 impl Hasher for Keccak256Hasher {
@@ -113,11 +113,11 @@ impl Hasher for Keccak256Hasher {
     }
 }
 
-/// Verificador de zeros - responsabilidade única
+/// Zero checker - single responsibility
 pub struct ZeroChecker;
 
 impl ZeroChecker {
-    /// Verifica se o hash tem o número necessário de zeros no início
+    /// Checks if hash has the required number of zeros at the beginning
     pub fn check_zeros(hash: &[u8; 32], required_zeros: u8) -> bool {
         // Verifica bytes completos (como no exemplo funcional)
         let zeros_to_check = required_zeros as usize;
@@ -129,7 +129,7 @@ impl ZeroChecker {
     }
 }
 
-/// Minerador - orquestra o processo de mineração
+/// Miner - orchestrates the mining process
 pub struct Miner<H: Hasher> {
     hasher: H,
     state: MiningState,
@@ -144,12 +144,12 @@ impl<H: Hasher> Miner<H> {
         }
     }
     
-    /// Atualiza o estado de mineração
+    /// Updates mining state
     pub fn update_state(&mut self, state: MiningState) {
         self.state = state;
     }
     
-    /// Executa a mineração
+    /// Executes mining
     pub fn mine<W, L>(&self, uart: &mut W, led: &mut L) -> Result<u32, MiningError>
     where
         W: Write,
@@ -161,12 +161,12 @@ impl<H: Hasher> Miner<H> {
         
         let mut nonce = 0u32;
         let ping_interval = 50000u32;
-        let led_toggle_interval = 10000u32; // Piscar LED a cada 10k iterações
+        let led_toggle_interval = 10000u32; // Blink LED every 10k iterations
         
         loop {
             let hash = self.hasher.hash(self.state.entropy, nonce);
             
-            // Piscar LED durante mineração
+            // Blink LED during mining
             if nonce % led_toggle_interval == 0 {
                 led.toggle().ok();
             }
@@ -183,7 +183,7 @@ impl<H: Hasher> Miner<H> {
             
             nonce = nonce.wrapping_add(1);
             
-            // Proteção contra overflow infinito
+            // Protection against infinite overflow
             if nonce == 0 {
                 return Err(MiningError::Overflow);
             }
@@ -191,7 +191,7 @@ impl<H: Hasher> Miner<H> {
     }
 }
 
-/// Erros de mineração
+/// Mining errors
 #[derive(Debug, PartialEq)]
 pub enum MiningError {
     NotConfigured,
@@ -236,7 +236,7 @@ impl MinerType {
         }
     }
     
-    /// Executa a mineração
+    /// Executes mining
     pub fn mine<W: Write, L>(&mut self, uart: &mut W, led: &mut L) -> Result<u32, MiningError>
     where
         L: embedded_hal::digital::StatefulOutputPin,

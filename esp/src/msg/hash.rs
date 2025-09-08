@@ -1,8 +1,8 @@
-//! Módulo para comando de seleção de algoritmo de hash
+//! Module for hash algorithm selection command
 
 use core::fmt::Write;
 
-/// Enum para representar os algoritmos de hash disponíveis
+/// Enum to represent available hash algorithms
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub enum HashAlgorithm {
     Sha256,
@@ -12,7 +12,7 @@ pub enum HashAlgorithm {
 impl HashAlgorithm {
     /// Parse um algoritmo a partir de uma string
     pub fn from_str(s: &str) -> Option<Self> {
-        // Comparação case-insensitive manual para no_std
+        // Manual case-insensitive comparison for no_std
         if s.eq_ignore_ascii_case("sha256") {
             Some(HashAlgorithm::Sha256)
         } else if s.eq_ignore_ascii_case("keccak256") || s.eq_ignore_ascii_case("keccak") {
@@ -31,12 +31,12 @@ impl HashAlgorithm {
     }
 }
 
-/// Envia mensagem de confirmação de mudança de algoritmo de hash
+/// Sends confirmation message for hash algorithm change
 pub fn send_hash_message<W: Write>(uart: &mut W, algorithm: HashAlgorithm) -> Result<(), core::fmt::Error> {
     write!(uart, "[HASH] Algoritmo alterado para: {}\r\n", algorithm.as_str())
 }
 
-/// Envia mensagem de erro para comando hash inválido
+/// Sends error message for invalid hash command
 pub fn send_hash_error_message<W: Write>(uart: &mut W, error: &str) -> Result<(), core::fmt::Error> {
     write!(uart, "[HASH_ERROR] {}\r\n", error)
 }

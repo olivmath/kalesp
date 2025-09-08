@@ -1,9 +1,9 @@
-//! Módulo para mensagens do comando mine
+//! Module for mine command messages
 
 
 use core::fmt::Write;
 
-/// Envia mensagem de início da mineração
+/// Sends mining start message
 pub fn send_mine_start_message<W>(uart: &mut W, zeros: u8, entropy: u8) -> Result<(), core::fmt::Error>
 where
     W: Write,
@@ -11,7 +11,7 @@ where
     write!(uart, "MINE_START: Iniciando mineração com {} zeros e entropy {}\r\n", zeros, entropy)
 }
 
-/// Envia mensagem de resultado da mineração
+/// Sends mining result message
 pub fn send_mine_result_message<W>(uart: &mut W, nonce: u32) -> Result<(), core::fmt::Error>
 where
     W: Write,
@@ -27,7 +27,7 @@ where
     write!(uart, "MINE_ERROR: {}\r\n", error)
 }
 
-/// Envia mensagem de progresso da mineração
+/// Sends mining progress message
 pub fn send_mine_progress_message<W>(uart: &mut W, nonce: u32, entropy: u8) -> Result<(), core::fmt::Error>
 where
     W: Write,

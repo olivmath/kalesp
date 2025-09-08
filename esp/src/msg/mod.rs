@@ -1,7 +1,7 @@
-//! Módulo de mensagens para comunicação serial
-//! 
-//! Este módulo contém todas as mensagens e comandos suportados
-//! pelo sistema de comunicação serial do ESP32.
+//! Message module for serial communication
+//!
+//! This module contains all messages and commands supported
+//! by the ESP32 serial communication system.
 
 pub mod help;
 pub mod info;
@@ -12,7 +12,7 @@ pub mod entropy;
 pub mod mine;
 pub mod hash;
 
-// Re-exportar as funções principais
+// Re-export main functions
 pub use help::send_help_message;
 pub use info::send_info_message;
 pub use reset::send_reset_message;

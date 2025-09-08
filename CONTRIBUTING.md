@@ -1,296 +1,297 @@
-# Contribuindo para o KALESP
+# Contributing to KALESP
 
-🎉 Obrigado por considerar contribuir para o KALESP! Este projeto é parte do ecossistema KALE e visa democratizar a mineração através de dispositivos ESP32.
+🎉 Thank you for considering contributing to KALESP! This project is part of the KALE ecosystem and aims to democratize mining through ESP32 devices.
 
-## 📋 Índice
+## 📋 Table of Contents
 
-- [Código de Conduta](#código-de-conduta)
-- [Como Posso Contribuir?](#como-posso-contribuir)
-- [Configuração do Ambiente](#configuração-do-ambiente)
-- [Processo de Desenvolvimento](#processo-de-desenvolvimento)
-- [Padrões de Código](#padrões-de-código)
-- [Testes](#testes)
-- [Documentação](#documentação)
+- [Code of Conduct](#code-of-conduct)
+- [How Can I Contribute?](#how-can-i-contribute)
+- [Environment Setup](#environment-setup)
+- [Development Process](#development-process)
+- [Code Standards](#code-standards)
+- [Testing](#testing)
+- [Documentation](#documentation)
 
-## 📜 Código de Conduta
+## 📜 Code of Conduct
 
-Este projeto adere aos princípios de **Proof-of-Teamwork** do ecossistema KALE. Esperamos que todos os participantes:
+This project adheres to the **Proof-of-Teamwork** principles of the KALE ecosystem. We expect all participants to:
 
-- 🤝 Sejam respeitosos e inclusivos
-- 🌱 Foquem na colaboração e crescimento mútuo
-- 🔧 Priorizem soluções técnicas sólidas
-- 🌍 Mantenham a visão de descentralização e acessibilidade
+- 🤝 Be respectful and inclusive
+- 🌱 Focus on collaboration and mutual growth
+- 🔧 Prioritize solid technical solutions
+- 🌍 Maintain the vision of decentralization and accessibility
 
-## 🚀 Como Posso Contribuir?
+## 🚀 How Can I Contribute?
 
-### 🐛 Reportando Bugs
+### 🐛 Reporting Bugs
 
-Antes de reportar um bug:
-1. Verifique se já não existe uma issue similar
-2. Teste com a versão mais recente
-3. Colete informações do sistema (OS, versão Python, modelo ESP32)
+Before reporting a bug:
+1. Check if a similar issue doesn't already exist
+2. Test with the latest version
+3. Collect system information (OS, Python version, ESP32 model)
 
-**Template para Bug Report:**
+**Bug Report Template:**
 ```markdown
-**Descrição do Bug**
-Descrição clara e concisa do problema.
+**Bug Description**
+Clear and concise description of the problem.
 
-**Passos para Reproduzir**
-1. Vá para '...'
-2. Clique em '...'
+**Steps to Reproduce**
+1. Go to '...'
+2. Click on '...'
 3. Execute '...'
-4. Veja o erro
+4. See error
 
-**Comportamento Esperado**
-O que deveria acontecer.
+**Expected Behavior**
+What should happen.
 
 **Screenshots/Logs**
-Se aplicável, adicione screenshots ou logs.
+If applicable, add screenshots or logs.
 
-**Ambiente:**
+**Environment:**
 - OS: [e.g. macOS 14.0]
 - Python: [e.g. 3.11.0]
 - ESP32: [e.g. DevKit v1]
-- Versão KALESP: [e.g. 0.1.0]
+- KALESP Version: [e.g. 0.1.0]
 ```
 
-### 💡 Sugerindo Melhorias
+### 💡 Suggesting Improvements
 
-**Template para Feature Request:**
+**Feature Request Template:**
 ```markdown
-**Problema Relacionado**
-Descreva o problema que esta feature resolveria.
+**Related Problem**
+Describe the problem this feature would solve.
 
-**Solução Proposta**
-Descreva a solução que você gostaria de ver.
+**Proposed Solution**
+Describe the solution you would like to see.
 
-**Alternativas Consideradas**
-Descreva alternativas que você considerou.
+**Alternatives Considered**
+Describe alternatives you considered.
 
-**Contexto Adicional**
-Qualquer outro contexto sobre a feature.
+**Additional Context**
+Any other context about the feature.
 ```
 
-### 🔧 Contribuindo com Código
+### 🔧 Contributing Code
 
-Áreas onde contribuições são especialmente bem-vindas:
+Areas where contributions are especially welcome:
 
 #### ESP32 Firmware (Rust)
-- Otimizações de algoritmos de hash
-- Melhorias no protocolo de comunicação serial
-- Implementações de novos comandos
-- Otimizações de performance e memória
+- Hash algorithm optimizations
+- Serial communication protocol improvements
+- New command implementations
+- Performance and memory optimizations
 
-#### Interface Python
-- Melhorias na GUI com Flet
-- Novos recursos de monitoramento
-- Integração com APIs externas
-- Testes automatizados
+#### Python Interface
+- GUI improvements with Flet
+- New monitoring features
+- External API integrations
+- Automated testing
 
-#### Integração KALE
-- Implementação do protocolo Stellar
-- Integração com smart contracts KALE
-- Sistema de orquestração de transações
-- Rede distribuída de ESP32s
+#### KALE Integration
+- Stellar protocol implementation
+- KALE smart contract integration
+- Transaction orchestration system
+- Distributed ESP32 network
 
-## 🛠️ Configuração do Ambiente
+## 🛠️ Environment Setup
 
-### Pré-requisitos
+### Prerequisites
 ```bash
-# Rust e ferramentas ESP32
+# Rust and ESP32 tools
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 cargo install espup
 espup install
 source $HOME/export-esp.sh
 cargo install espflash
 
-# Python e dependências
+# Python and dependencies
 python3 -m pip install --upgrade pip
 cd interface
 pip install -r requirements.txt
 ```
 
-### Fork e Clone
+### Fork and Clone
 ```bash
-# Fork o repositório no GitHub
-# Clone seu fork
-git clone https://github.com/SEU_USERNAME/kalesp.git
+# Fork the repository on GitHub
+# Clone your fork
+git clone https://github.com/YOUR_USERNAME/kalesp.git
 cd kalesp
 
-# Adicione o repositório original como upstream
+# Add the original repository as upstream
 git remote add upstream https://github.com/ORIGINAL_OWNER/kalesp.git
 ```
 
-## 🔄 Processo de Desenvolvimento
+## 🔄 Development Process
 
-### 1. Crie uma Branch
+### 1. Create a Branch
 ```bash
-git checkout -b feature/nome-da-feature
-# ou
-git checkout -b fix/nome-do-bug
-# ou
-git checkout -b docs/melhoria-documentacao
+git checkout -b feature/feature-name
+# or
+git checkout -b fix/bug-name
+# or
+git checkout -b docs/documentation-improvement
 ```
 
-### 2. Faça suas Mudanças
-- Mantenha commits pequenos e focados
-- Use mensagens de commit descritivas
-- Teste suas mudanças localmente
+### 2. Make Your Changes
+- Keep commits small and focused
+- Use descriptive commit messages
+- Test your changes locally
 
-### 3. Teste
+### 3. Test
 ```bash
-# Teste o firmware ESP32
+# Test ESP32 firmware
 cd esp
 cargo check
 cargo build --release
 
-# Teste a interface Python
+# Test Python interface
 cd ../interface
-python -m pytest  # se houver testes
-python esp32_gui.py  # teste manual
+python -m pytest  # if tests exist
+python esp32_gui.py  # manual test
 ```
 
-### 4. Commit e Push
+### 4. Commit and Push
 ```bash
 git add .
-git commit -m "feat: adiciona nova funcionalidade X"
-git push origin feature/nome-da-feature
+git commit -m "feat: add new functionality X"
+git push origin feature/feature-name
 ```
 
-### 5. Abra um Pull Request
-- Use o template de PR
-- Descreva claramente as mudanças
-- Referencie issues relacionadas
-- Aguarde review e feedback
+### 5. Open a Pull Request
+- Use the PR template
+- Clearly describe the changes
+- Reference related issues
+- Wait for review and feedback
 
-## 📝 Padrões de Código
+## 📝 Code Standards
 
 ### Rust (ESP32)
 ```rust
-// Use snake_case para funções e variáveis
+// Use snake_case for functions and variables
 fn calculate_hash_rate() -> u32 {
-    // Código aqui
+    // Code here
 }
 
-// Use PascalCase para structs e enums
+// Use PascalCase for structs and enums
 struct MiningConfig {
     difficulty: u8,
     algorithm: HashAlgorithm,
 }
 
-// Documente funções públicas
-/// Calcula o hash Keccak-256 dos dados fornecidos
+// Document public functions
+/// Calculates the Keccak-256 hash of the provided data
 /// 
 /// # Arguments
-/// * `data` - Os dados para fazer hash
+/// * `data` - The data to hash
 /// 
 /// # Returns
-/// * `[u8; 32]` - O hash resultante
+/// * `[u8; 32]` - The resulting hash
 pub fn keccak256(data: &[u8]) -> [u8; 32] {
-    // Implementação
+    // Implementation
 }
 ```
 
 ### Python (Interface)
 ```python
-# Use snake_case para funções e variáveis
+# Use snake_case for functions and variables
 def connect_to_esp32(port: str) -> bool:
-    """Conecta à porta serial do ESP32.
+    """Connects to ESP32 serial port.
     
     Args:
-        port: Caminho da porta serial (e.g., '/dev/ttyUSB0')
+        port: Serial port path (e.g., '/dev/ttyUSB0')
         
     Returns:
-        True se conectado com sucesso, False caso contrário
+        True if connected successfully, False otherwise
     """
     pass
 
-# Use PascalCase para classes
+# Use PascalCase for classes
 class ESP32Manager:
-    """Gerencia comunicação com dispositivos ESP32."""
+    """Manages communication with ESP32 devices."""
     
     def __init__(self, port: str, baudrate: int = 115200):
         self.port = port
         self.baudrate = baudrate
 ```
 
-### Mensagens de Commit
-Use o padrão [Conventional Commits](https://www.conventionalcommits.org/):
+### Commit Messages
+Use the [Conventional Commits](https://www.conventionalcommits.org/) standard:
 
 ```
-feat: adiciona suporte a algoritmo Keccak-256
-fix: corrige bug na comunicação serial
-docs: atualiza README com instruções de instalação
-style: formata código Rust com rustfmt
-refactor: reorganiza estrutura de módulos
-test: adiciona testes para função de hash
-chore: atualiza dependências do Cargo.toml
+feat: add support for Keccak-256 algorithm
+fix: fix bug in serial communication
+docs: update README with installation instructions
+style: format Rust code with rustfmt
+refactor: reorganize module structure
+test: add tests for hash function
+chore: update Cargo.toml dependencies
 ```
 
-## 🧪 Testes
+## 🧪 Testing
 
-### Testes Unitários (Rust)
+### Unit Tests (Rust)
 ```bash
 cd esp
 cargo test
 ```
 
-### Testes de Integração (Python)
+### Integration Tests (Python)
 ```bash
 cd interface
 python -m pytest tests/
 ```
 
-### Testes Manuais
-1. Compile e flash o firmware no ESP32
-2. Execute a interface Python
-3. Teste todos os comandos disponíveis
-4. Verifique logs e comportamento esperado
+### Manual Tests
+1. Compile and flash firmware to ESP32
+2. Run Python interface
+3. Test all available commands
+4. Check logs and expected behavior
 
-## 📚 Documentação
+## 📚 Documentation
 
-### Atualizando Documentação
-- **README.md**: Instruções gerais e overview
-- **ROADMAP.md**: Planos futuros e integração KALE
-- **LORE.md**: Contexto narrativo do projeto
-- **Código**: Documente funções públicas e módulos
+### Updating Documentation
+- Keep README.md updated
+- Document new features
+- Update CHANGELOG.md
+- Add code comments
 
-### Padrões de Documentação
-- Use Markdown para documentos
-- Inclua exemplos de código quando relevante
-- Mantenha linguagem clara e acessível
-- Atualize CHANGELOG.md para mudanças significativas
+### Documentation Standards
+- Use Markdown for documentation
+- Include code examples
+- Keep language clear and concise
+- Add diagrams when necessary
 
-## 🎯 Áreas Prioritárias
+## 🎯 Priority Areas
 
-### Alta Prioridade
-1. **Otimização Keccak-256** para ESP32
-2. **Protocolo de comunicação** robusto
-3. **Integração Stellar** básica
-4. **Testes automatizados** abrangentes
+### High Priority
+- Hash algorithm optimization
+- Serial communication stability improvements
+- Implementation of new mining algorithms
+- Automated testing
 
-### Média Prioridade
-1. **Interface gráfica** melhorada
-2. **Sistema de logs** avançado
-3. **Documentação** técnica detalhada
-4. **Performance** benchmarks
+### Medium Priority
+- More intuitive graphical interface
+- Support for more ESP32 types
+- Detailed technical documentation
+- Usage examples
 
-### Baixa Prioridade
-1. **Recursos experimentais**
-2. **Integrações opcionais**
-3. **Melhorias cosméticas**
+### Low Priority
+- Interface themes
+- Experimental features
+- Integrations with other tools
+- Minor performance optimizations
 
-## 🤔 Dúvidas?
+## 🤔 Questions?
 
-Se você tem dúvidas sobre como contribuir:
+If you have questions about how to contribute:
 
-1. 📖 Leia a documentação existente
-2. 🔍 Procure por issues similares
-3. 💬 Abra uma issue para discussão
-4. 📧 Entre em contato com os mantenedores
+1. 📖 Read existing documentation
+2. 🔍 Search for similar issues
+3. 💬 Open an issue for discussion
+4. 📧 Contact the maintainers
 
 ---
 
-**Lembre-se**: Toda contribuição, por menor que seja, é valiosa! Desde correções de typos até implementações de features complexas, tudo ajuda a fortalecer o espírito de **Proof-of-Teamwork** do KALESP.
+**Remember**: Every contribution, no matter how small, is valuable! From typo fixes to complex feature implementations, everything helps strengthen the **Proof-of-Teamwork** spirit of KALESP.
 
-🚀 **Vamos construir o futuro da mineração descentralizada juntos!**
+🚀 **Let's build the future of decentralized mining together!**

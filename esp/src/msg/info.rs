@@ -1,4 +1,4 @@
-//! Mensagem de informações do dispositivo
+//! Device information message
 
 use esp_hal::uart::Uart;
 use esp_hal::DriverMode;
@@ -6,7 +6,7 @@ use core::fmt::Write;
 
 use crate::mining::MiningState;
 
-/// Envia mensagem de informações do dispositivo e estado de mineração
+/// Sends device information and mining state message
 pub fn send_info_message<D>(uart: &mut Uart<D>, mining_state: &MiningState) -> Result<(), core::fmt::Error>
 where
     D: DriverMode,

@@ -63,7 +63,7 @@ class ESP32Serial:
         return False
     
     def read_messages(self):
-        """Lê mensagens do ESP32 continuamente"""
+        """Reads messages from ESP32 continuously"""
         while self.running and self.serial_conn and self.serial_conn.is_open:
             try:
                 if self.serial_conn.in_waiting > 0:

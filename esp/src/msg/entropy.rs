@@ -1,9 +1,9 @@
-//! Módulo para mensagens do comando entropy
+//! Module for entropy command messages
 
 
 use core::fmt::Write;
 
-/// Envia mensagem de confirmação para o comando entropy
+/// Sends confirmation message for entropy command
 pub fn send_entropy_message<W>(uart: &mut W, entropy: u8) -> Result<(), core::fmt::Error>
 where
     W: Write,
@@ -11,7 +11,7 @@ where
     write!(uart, "ENTROPY: {} configurado para mineração\r\n", entropy)
 }
 
-/// Envia mensagem de erro para comando entropy inválido
+/// Sends error message for invalid entropy command
 pub fn send_entropy_error_message<W>(uart: &mut W, error: &str) -> Result<(), core::fmt::Error>
 where
     W: Write,

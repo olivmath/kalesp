@@ -41,7 +41,7 @@ fn main() -> ! {
     // Configurar LED para indicar atividade
     let mut led = Output::new(peripherals.GPIO2, Level::Low, OutputConfig::default());
 
-    // Configurar UART0 (usa pinos padrão do ESP32: TX=GPIO1, RX=GPIO3)
+    // Configure UART0 (uses ESP32 default pins: TX=GPIO1, RX=GPIO3)
     let uart_config = Config::default();
     let mut uart = Uart::new(peripherals.UART0, uart_config).unwrap();
 
@@ -53,12 +53,12 @@ fn main() -> ! {
     let mut last_led_toggle = Instant::now();
     let mut buffer: String<128> = String::new();
     
-    // Estado de mineração
+    // Mining state
     let mut mining_state = MiningState::new();
     let mut current_miner = MinerFactory::create_miner_for_algorithm(mining_state.get_hash_algorithm());
 
     loop {
-        // Piscar LED a cada 500ms para indicar que está funcionando
+        // Blink LED every 500ms to indicate it's working
         if last_led_toggle.elapsed() >= Duration::from_millis(500) {
             led.toggle();
             last_led_toggle = Instant::now();
@@ -137,7 +137,7 @@ fn main() -> ! {
                             rprintln!("Comando processado: {}", cmd_str);
                             buffer.clear();
                         }
-                    } else if byte >= 32 && byte <= 126 { // Caracteres imprimíveis
+                    } else if byte >= 32 && byte <= 126 { // Printable characters
                         if buffer.push(byte as char).is_err() {
                             // Buffer cheio, limpar e continuar
                             buffer.clear();
@@ -149,7 +149,7 @@ fn main() -> ! {
 
 
 
-        // Pequeno delay para não sobrecarregar o sistema
+        // Small delay to not overload the system
         let delay_start = Instant::now();
         while delay_start.elapsed() < Duration::from_millis(50) {}
     }

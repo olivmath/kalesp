@@ -1,9 +1,9 @@
-//! Módulo para mensagens do comando zeros
+//! Module for zeros command messages
 
 
 use core::fmt::Write;
 
-/// Envia mensagem de confirmação para o comando zeros
+/// Sends confirmation message for zeros command
 pub fn send_zeros_message<W>(uart: &mut W, zeros: u8) -> Result<(), core::fmt::Error>
 where
     W: Write,
@@ -11,7 +11,7 @@ where
     write!(uart, "ZEROS: {} zeros configurados para mineração\r\n", zeros)
 }
 
-/// Envia mensagem de erro para comando zeros inválido
+/// Sends error message for invalid zeros command
 pub fn send_zeros_error_message<W>(uart: &mut W, error: &str) -> Result<(), core::fmt::Error>
 where
     W: Write,
