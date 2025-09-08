@@ -2,10 +2,49 @@
 
 🚀 **KALESP** is a development platform for mining using ESP32 with Python interface for serial communication. This project serves as a foundation for future integrations with the KALE blockchain ecosystem.
 
-
 <div align="center">
   <img width="800" alt="KALESP Interface" src="https://github.com/user-attachments/assets/912953d4-3c5f-40f3-a471-c95ac6af05e9" />
 </div>
+
+## 📊 System Architecture Overview
+
+```mermaid
+graph TD
+    A[ESP32 Firmware - Executa hashes Keccak-256] -- Comunicação Serial UART --> B[Interface Python - GUI e Orquestração]
+    B -- Comandos e Configurações --> A
+    A -- Resultados de Hash e Status --> B
+    B -- Integração e Submissão --> C[Rede Stellar - Blockchain KALE]
+    A --- D[Processo de Mineração - Nonces e Dificuldade]
+```
+
+## 🔄 Mining Workflow (Plant → Work → Harvest)
+
+```mermaid
+graph TD
+    A[Início] --> B[Plant: Stake e Início do Ciclo]
+    B --> C[Work: Proof-of-Work no ESP32]
+    C -->|Nonce Válido Encontrado| D[Harvest: Submissão e Reivindicação de Recompensas]
+    C -->|Continuar Busca| C
+    D --> E[Fim / Reinício do Ciclo]
+```
+
+## 📅 Development Roadmap
+
+```mermaid
+gantt
+    title Roadmap de Integração KALESP
+    dateFormat  YYYY-MM-DD
+    section Fase 1
+    Análise e Mapeamento :done, p1, 2023-10-01, 30d
+    section Fase 2
+    Implementação Keccak-256 no ESP32 :done, p2, after p1, 45d
+    section Fase 3
+    Integração Stellar SDK : p3, after p2, 60d
+    section Fase 4
+    Testes em Testnet : p4, after p3, 30d
+    section Fase 5
+    Deployment em Mainnet : p5, after p4, 30d
+```
 
 ## THE (new) LORE
 
@@ -208,17 +247,6 @@ The graphical interface provides:
 
 ## 🚀 Roadmap - KALE Integration
 
-### Arquitetura do Sistema
-
-```mermaid
-graph TD
-    A[ESP32 Firmware - Executa hashes Keccak-256] -- Comunicação Serial UART --> B[Interface Python - GUI e Orquestração]
-    B -- Comandos e Configurações --> A
-    A -- Resultados de Hash e Status --> B
-    B -- Integração e Submissão --> C[Rede Stellar - Blockchain KALE]
-    A --- D[Processo de Mineração - Nonces e Dificuldade]
-```
-
 ### Roadmap para Mineração Real de KALE
 
 - [x] Implementação de comunicação serial bidirecional ESP32 ↔ Python
@@ -322,31 +350,6 @@ This project is licensed under the MIT License. See the `LICENSE` file for more 
 **Current Version**: v0.1.0 - Development Prototype  
 **Next Release**: v0.2.0 - Basic KALE Integration
 
-### Roadmap em Gantt
+---
 
-```mermaid
-gantt
-    title Roadmap de Integração KALESP
-    dateFormat  YYYY-MM-DD
-    section Fase 1
-    Análise e Mapeamento :done, p1, 2023-10-01, 30d
-    section Fase 2
-    Implementação Keccak-256 no ESP32 :done, p2, after p1, 45d
-    section Fase 3
-    Integração Stellar SDK : p3, after p2, 60d
-    section Fase 4
-    Testes em Testnet : p4, after p3, 30d
-    section Fase 5
-    Deployment em Mainnet : p5, after p4, 30d
-```
-
-### Fluxo de Mineração (Plant → Work → Harvest)
-
-```mermaid
-graph TD
-    A[Início] --> B[Plant: Stake e Início do Ciclo]
-    B --> C[Work: Proof-of-Work no ESP32]
-    C -->|Nonce Válido Encontrado| D[Harvest: Submissão e Reivindicação de Recompensas]
-    C -->|Continuar Busca| C
-    D --> E[Fim / Reinício do Ciclo]
-```
+> 💡 **Note**: Os diagramas acima mostram a arquitetura atual e o roadmap planejado para integração completa com o ecossistema KALE blockchain.
