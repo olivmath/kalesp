@@ -217,11 +217,12 @@ MINE_ERROR <error_message>
 ## ✅ Minimum Acceptance Criteria
 
 ### Functional
-- [ ] ESP32 executes Keccak-256 mining equivalent to existing miners
-- [ ] Python orchestrates plant → work → harvest with correct timing
-- [ ] Transactions submitted via Launchtube successfully
-- [ ] State persisted and recovered between executions
-- [ ] Network and hardware error handling
+
+- [x] ESP32 executes Keccak-256 mining equivalent to existing miners
+- [x] Python Interact and Control ESP32 Mineration
+- [x] GUI for control ESP32
+- [ ] Python orchestrates plant → work → harvest
+- [ ] Integrate Python to Transactions submitted via Launchtube successfully
 
 ### Performance
 - [ ] ESP32: >100 KH/s (conservative target)
