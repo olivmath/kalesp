@@ -156,12 +156,21 @@ node js_serial.js
 O ESP32 agora processa comandos em tempo real e responde adequadamente:
 
 ### Comandos Disponíveis
+
+#### Comandos Gerais
 - `help` - Mostra lista completa de comandos
-- `status` - Retorna status atual do sistema
 - `info` - Informações detalhadas do dispositivo
-- `ping` - Teste de conectividade (responde "Pong!")
 - `reset` - Reinicia o contador do sistema
-- Qualquer outro texto será ecoado com confirmação
+
+#### Comandos de Mineração
+- `zeros N` - Define número de zeros necessários (ex: `zeros 4`)
+- `entropy N` - Define valor de entropy (ex: `entropy 123`)
+- `mine` - Inicia processo de mineração
+
+#### Comandos de Hash
+- `hash` - Mostra algoritmo de hash atual
+- `hash sha256` - Alterna para algoritmo SHA-256
+- `hash keccak256` - Alterna para algoritmo Keccak-256
 
 ### Exemplo de Interação
 ```
