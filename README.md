@@ -2,6 +2,21 @@
 
 🚀 **KALESP** is a development platform for mining using ESP32 with Python interface for serial communication. This project serves as a foundation for future integrations with the KALE blockchain ecosystem.
 
+
+<div align="center">
+  <img width="800" alt="KALESP Interface" src="https://github.com/user-attachments/assets/912953d4-3c5f-40f3-a471-c95ac6af05e9" />
+</div>
+
+## THE (new) LORE
+
+<div align="center">
+  <a href="https://www.youtube.com/watch?v=j8e82qtdECU" target="_blank">
+    <img src="https://img.youtube.com/vi/j8e82qtdECU/hqdefault.jpg" alt="KALESP Demo Video" width="480" height="360">
+  </a>
+  <br>
+  <strong>🎥 <a href="https://www.youtube.com/watch?v=j8e82qtdECU" target="_blank">Watch the KALESP demo video</a></strong>
+</div>
+
 ## What does it do?
 
 KALESP is a mining development platform using ESP32 that implements hash algorithms (Keccak-256) and enables serial communication with a Python interface. Currently, the project already has:
